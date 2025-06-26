@@ -1,20 +1,24 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom";
 
-export const Login = () => {
+export const Formlogin = () => {
+    const navigate = useNavigate()
 
     const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
 
-    const verifyUser = () =>{
+    const handlerValidate = (e) =>{
+        e.preventDefault()
         if (!user && !password || user != 'admin' && password != '123456' ) {
             alert('informacion incorrecta')
+            return
         }
-        alert('Bienvenido')
+        navigate("/welcome")
         return
     }
 
     return (
-        <div className="">
+        <form className="" onSubmit={handlerValidate}>
             <label className="form-label" for="user">Usuario</label>
             <input 
                 className="form-control" 
@@ -33,12 +37,7 @@ export const Login = () => {
                 value={password}
                 onChange={(e)=>{setPassword(e.target.value)}} />
 
-            <input 
-            className="btn btn-primary" 
-            type="button" 
-            value="Iniciar Session" 
-            onClick={verifyUser} 
-            />
-        </div>
+            <button type="submit" className="btn btn-primary mt-3">Iniciar session</button>
+        </form>
     )
 }
